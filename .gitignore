@@ -160,5 +160,6 @@ venv.bak/
 # mlflow local runs
 mlruns/*
 
-#venv
+#venv and other
 venv/
+.DS_Store
