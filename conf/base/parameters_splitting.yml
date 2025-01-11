@@ -1,0 +1,6 @@
+model_options:
+  test_size: 0.2
+  random_state: 123
+  target_column: "purchase_price"
+  column_to_drop: "house_id"
+   

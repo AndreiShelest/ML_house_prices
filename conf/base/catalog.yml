@@ -39,33 +39,38 @@
 # (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
 # https://docs.kedro.org/en/stable/data/data_catalog.html
 
-companies:
+house_prices:
   type: pandas.CSVDataset
-  filepath: data/01_raw/companies.csv
+  filepath: data/01_raw/HousePrices_sample.csv
 
-reviews:
-  type: pandas.CSVDataset
-  filepath: data/01_raw/reviews.csv
 
-shuttles:
-  type: pandas.ExcelDataset
-  filepath: data/01_raw/shuttles.xlsx
-  load_args:
-    engine: openpyxl
+# companies:
+#   type: pandas.CSVDataset
+#   filepath: data/01_raw/companies.csv
 
-preprocessed_companies:
-  type: pandas.ParquetDataset
-  filepath: data/02_intermediate/preprocessed_companies.parquet
+# reviews:
+#   type: pandas.CSVDataset
+#   filepath: data/01_raw/reviews.csv
 
-preprocessed_shuttles:
-  type: pandas.ParquetDataset
-  filepath: data/02_intermediate/preprocessed_shuttles.parquet
+# shuttles:
+#   type: pandas.ExcelDataset
+#   filepath: data/01_raw/shuttles.xlsx
+#   load_args:
+#     engine: openpyxl
 
-model_input_table:
-  type: pandas.ParquetDataset
-  filepath: data/03_primary/model_input_table.parquet
+# preprocessed_companies:
+#   type: pandas.ParquetDataset
+#   filepath: data/02_intermediate/preprocessed_companies.parquet
 
-regressor:
-  type: pickle.PickleDataset
-  filepath: data/06_models/regressor.pickle
-  versioned: true
+# preprocessed_shuttles:
+#   type: pandas.ParquetDataset
+#   filepath: data/02_intermediate/preprocessed_shuttles.parquet
+
+# model_input_table:
+#   type: pandas.ParquetDataset
+#   filepath: data/03_primary/model_input_table.parquet
+
+# regressor:
+#   type: pickle.PickleDataset
+#   filepath: data/06_models/regressor.pickle
+#   versioned: true
