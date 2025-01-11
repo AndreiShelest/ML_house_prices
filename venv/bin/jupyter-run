@@ -1,4 +1,4 @@
-#!/Users/zofiab/Documents/2024-2025/ML_project/House_prices/ML_house_prices/venv/bin/python
+#!/Users/zofiab/Documents/2024-2025/ML_project/House_prices/ML/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

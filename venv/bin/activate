@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/zofiab/Documents/2024-2025/ML_project/House_prices/ML_house_prices/venv"
+VIRTUAL_ENV="/Users/zofiab/Documents/2024-2025/ML_project/House_prices/ML/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
