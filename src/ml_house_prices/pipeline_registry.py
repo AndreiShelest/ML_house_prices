@@ -2,8 +2,8 @@
 
 from kedro.framework.project import find_pipelines
 from kedro.pipeline import Pipeline
-# from .pipelines.data_science.pipeline import create_data_science_pipeline
-# from .pipelines.data_processing.pipeline import create_data_processing_pipeline
+from ml_house_prices.pipelines.splitting import pipeline as splitting_pipeline
+from ml_house_prices.pipelines.data_processing import pipeline as data_processing_pipeline
 
 def register_pipelines() -> dict[str, Pipeline]:
     """Register the project's pipelines.
@@ -11,9 +11,12 @@ def register_pipelines() -> dict[str, Pipeline]:
     Returns:
         A mapping from pipeline names to ``Pipeline`` objects.
     """
-    pipelines = find_pipelines()
-    pipelines["__default__"] = sum(pipelines.values())
+    splitting = splitting_pipeline.create_splitting_pipeline()
+    data_processing = data_processing_pipeline.create_data_processing_pipeline()
 
-    # pipelines['data_processing_pipeline'] = create_data_processing_pipeline()
-    # pipelines['data_science_pipeline'] = create_data_science_pipeline()
-    return pipelines
+    # Register pipelines
+    return {
+        "__default__": splitting + data_processing,  # Combine pipelines into the default pipeline
+        "data_splitting_pipeline": splitting,        # Register splitting pipeline
+        "data_processing_pipeline": data_processing # Register data processing pipeline
+    }

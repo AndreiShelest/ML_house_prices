@@ -1,42 +1,54 @@
 import logging
-
 import pandas as pd
+from category_encoders.cat_boost import CatBoostEncoder
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+def encode(data: pd.DataFrame, parameters: dict, target: pd.Series):
+    catboost_columns= parameters["catboost"]
+    onehot_columns =parameters["one_hot"]
+    if not catboost_columns and not onehot_columns:
+        raise ValueError("Both catboost_columns and onehot_columns cannot be empty.")
+
+    encoded_data = data.copy()
+
+    # Perform CatBoost encoding
+    if catboost_columns:
+        catboost_encoder = CatBoostEncoder(cols=catboost_columns)
+        encoded_catboost = catboost_encoder.fit_transform(data[catboost_columns], target)
+        # Replace the original columns with the encoded ones
+        encoded_data[catboost_columns] = encoded_catboost
+
+    # Perform One-Hot encoding
+    if onehot_columns:
+        onehot_encoded = pd.get_dummies(data[onehot_columns], columns=onehot_columns, drop_first=True)
+        # Drop the original onehot columns
+        encoded_data = encoded_data.drop(columns=onehot_columns)
+        # Concatenate the one-hot encoded columns
+        encoded_data = pd.concat([encoded_data, onehot_encoded], axis=1)
+
+    return encoded_data
 
 
-def split_data(data: pd.DataFrame, parameters: dict) -> tuple:
-    """Splits data into features and targets training and test sets.
 
-    Args:
-        data: Data containing features and target.
-        parameters: Parameters defined in parameters/data_science.yml.
-    Returns:
-        Split data.
-    """
-    X = data[parameters["features"]]
-    y = data["price"]
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=parameters["test_size"], random_state=parameters["random_state"]
-    )
-    return X_train, X_test, y_train, y_test
+def train_benchmark(X_train: pd.DataFrame, y_train: pd.Series, X_test: pd.DataFrame, y_test: pd.Series):
+ 
+    model = LinearRegression()
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
 
+    # Evaluate the model
+    metrics = {
+        "mean_squared_error": mean_squared_error(y_test, y_pred),
+        "mean_absolute_error": mean_absolute_error(y_test, y_pred),
+        "r2_score": r2_score(y_test, y_pred)
+    }
 
-def train_model(X_train: pd.DataFrame, y_train: pd.Series) -> LinearRegression:
-    """Trains the linear regression model.
+    # Log the evaluation metrics
+    print(f"Linear Regression Evaluation Metrics:\n{metrics}")
 
-    Args:
-        X_train: Training data of independent features.
-        y_train: Training data for price.
-
-    Returns:
-        Trained model.
-    """
-    regressor = LinearRegression()
-    regressor.fit(X_train, y_train)
-    return regressor
-
+    # Return the trained model and metrics
+    return {"model": model, "metrics": metrics}
 
 def evaluate_model(
     regressor: LinearRegression, X_test: pd.DataFrame, y_test: pd.Series

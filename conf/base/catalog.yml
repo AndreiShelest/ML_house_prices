@@ -44,31 +44,41 @@ house_prices:
   filepath: data/01_raw/HousePrices_sample.csv
 
 
-# companies:
-#   type: pandas.CSVDataset
-#   filepath: data/01_raw/companies.csv
+HP_train:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/hp_train.csv
 
-# reviews:
-#   type: pandas.CSVDataset
-#   filepath: data/01_raw/reviews.csv
+HP_y_train:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/hp_y_train.csv
 
-# shuttles:
-#   type: pandas.ExcelDataset
-#   filepath: data/01_raw/shuttles.xlsx
-#   load_args:
-#     engine: openpyxl
+HP_test:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/hp_test.csv
 
-# preprocessed_companies:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/preprocessed_companies.parquet
+HP_y_test:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/hp_y_test.csv
 
-# preprocessed_shuttles:
-#   type: pandas.ParquetDataset
-#   filepath: data/02_intermediate/preprocessed_shuttles.parquet
+X_test:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/x_test.csv
 
-# model_input_table:
-#   type: pandas.ParquetDataset
-#   filepath: data/03_primary/model_input_table.parquet
+X_train:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/x_train.csv
+
+Y_train:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/y_train.csv
+
+Y_test:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/y_test.csv
+
+data:
+  type: pandas.CSVDataset
+  filepath: data/03_primary/data.csv
 
 # regressor:
 #   type: pickle.PickleDataset
