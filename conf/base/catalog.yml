@@ -80,7 +80,25 @@ data:
   type: pandas.CSVDataset
   filepath: data/03_primary/data.csv
 
-# regressor:
-#   type: pickle.PickleDataset
-#   filepath: data/06_models/regressor.pickle
-#   versioned: true
+lightgbm_model:
+  type: kedro.extras.datasets.pickle.PickleDataSet
+  filepath: data/06_models/lightgbm_model.pkl
+
+
+xgboost_model:
+  type: kedro.extras.datasets.pickle.PickleDataSet
+  filepath: data/06_models/xgboost_model.pkl
+
+
+linear_regression_model:
+  type: kedro.extras.datasets.pickle.PickleDataSet
+  filepath: data/06_models/linear_regression_model.pkl
+
+
+hyperparameters:
+  type: kedro.extras.datasets.json.JSONDataSet
+  filepath: data/08_reporting/hyperparameters.json
+
+scores:
+  type: kedro.extras.datasets.json.JSONDataSet
+  filepath: data/08_reporting/scores.json
