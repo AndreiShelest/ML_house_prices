@@ -2,8 +2,8 @@ random_state: 123
 splitting:
   test_size: 0.2
   target_column: "purchase_price"
-  column_to_drop: "house_id"
+  columns_to_drop: ["house_id"]
 processing:
   encoding:
-    catboost: ["area"]
-    one_hot: ["region"]
+    catboost: ["city", "zip_code", "address"]
+    one_hot: ["house_type", "sales_type", "area", "region"]
