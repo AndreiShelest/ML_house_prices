@@ -1,32 +1,41 @@
 random_state: 123
 cv_folds: 5 
+
 splitting:
   test_size: 0.2
   target_column: "purchase_price"
   columns_to_drop: ["house_id", "address"]
-processing:
-  encoding:
-    k_fold: ["zip_code"]
-    catboost: ["city"]
-    one_hot: ["house_type", "sales_type", "area", "region"]
+
+quarter_column: "quarter"
+date_column: "date"
+categorical_columns: "city"
+exclude_columns: ["city", "yield_on_mortgage_credit_bonds%", "dk_ann_infl_rate%"]
+continuous_imputation_params: ["yield_on_mortgage_credit_bonds%", "dk_ann_infl_rate%"]
+
+encoding:
+  catboost: ["city", "zip_code"]
+  one_hot: ["house_type", "sales_type", "area", "region"]
+
 lightgbm_model:
   param_grid:
     num_leaves: [31, 50, 100]
-    learning_rate: [0.01, 0.05, 0.1]
+    learning_rate: [0.01,0.03, 0.05, 0.1]
     n_estimators: [50, 100, 200]
-    max_depth: [-1, 10, 20, 30]
-    min_child_samples: [10, 20, 30]
+    max_depth: [-1, 7, 10, 15, 20]
+    min_child_samples: [10, 15, 20]
     subsample: [0.6, 0.8, 1.0]
+
 xgboost_model:
   param_grid:
-    max_depth: [3, 6, 10]
-    learning_rate: [0.01, 0.05, 0.1]
+    max_depth: [3, 6, 10, 12]
+    learning_rate: [0.01,0.03, 0.06, 0.1]
     n_estimators: [50, 100, 200]
     gamma: [0, 0.1, 0.5]
     subsample: [0.6, 0.8, 1.0]
     colsample_bytree: [0.6, 0.8, 1.0]
 linear_regression_model:
   param_grid:
+    fit_intercept: [true, false]
     normalize: [true, false]
 model_names:
   lightgbm: "LightGBM"

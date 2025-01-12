@@ -21,5 +21,5 @@ def register_pipelines() -> dict[str, Pipeline]:
         "__default__": splitting + data_processing + modelling,
         "data_splitting_pipeline": splitting,       
         "data_processing_pipeline": data_processing,
-        "modelling_pipeline": modelling
+        "modelling_pipeline": modelling,
     }
