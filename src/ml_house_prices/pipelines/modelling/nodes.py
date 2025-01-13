@@ -89,7 +89,7 @@ def train_xgboost(x_train, y_train, param_grid, cv_folds, random_state):
         model,
         param_distributions=parsed_param_grid,
         cv=cv_folds,
-        n_iter=10,
+        n_iter=20,
         random_state=random_state,
         scoring="neg_mean_squared_error",
     )
@@ -109,7 +109,7 @@ def train_lightgbm(x_train, y_train, param_grid, cv_folds, random_state):
         model,
         param_distributions=parsed_param_grid,
         cv=cv_folds,
-        n_iter=10,
+        n_iter=20,
         random_state=random_state,
         scoring="neg_mean_squared_error",
     )
@@ -134,7 +134,7 @@ def train_catboost(x_train, y_train, param_grid, cv_folds, random_state):
         estimator=model,
         param_distributions=parsed_param_grid,
         cv=cv_folds,
-        n_iter=10,
+        n_iter=20,
         random_state=random_state,
         scoring="neg_mean_squared_error",
     )

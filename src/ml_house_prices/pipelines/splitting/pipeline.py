@@ -13,8 +13,8 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs=[
                     'HP_train',
                     'HP_test',
-                    'Y_train',
-                    'Y_test',
+                    'HP_y_train',
+                    'HP_y_test',
                 ],
                 name='split_data_node',
                 tags=["split_data"]
