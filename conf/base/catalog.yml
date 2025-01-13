@@ -47,25 +47,10 @@ HP_train:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/hp_train.csv
 
-x_train_clean:
-  type: pandas.CSVDataset
-  filepath: data/03_primary/x_train_clean.csv
-
-x_test_clean:
-  type: pandas.CSVDataset
-  filepath: data/03_primary/x_test_clean.csv
-
-HP_y_train:
-  type: pandas.CSVDataset
-  filepath: data/02_intermediate/hp_y_train.csv
-
 HP_test:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/hp_test.csv
 
-HP_y_test:
-  type: pandas.CSVDataset
-  filepath: data/02_intermediate/hp_y_test.csv
 
 x_train_quarter:
   type: pandas.CSVDataset
@@ -117,6 +102,9 @@ X_train:
 Y_train:
   type: pandas.CSVDataset
   filepath: data/05_model_input/y_train.csv
+Y_train_1:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/y_train_1.csv
 
 Y_test:
   type: pandas.CSVDataset

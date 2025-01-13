@@ -1,5 +1,6 @@
 import logging
 import pandas as pd
+import numpy as np
 from category_encoders.cat_boost import CatBoostEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -33,7 +34,8 @@ def remove_outliers(
 
     return x_train_clean, y_train_clean, x_test_clean, y_test_clean
     
-
+def log_transform(data):
+    return np.log(data)
 
 def extract_quarter(x_train, x_test, column):
 

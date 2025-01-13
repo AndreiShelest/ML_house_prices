@@ -1,18 +1,18 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import split_date_column, extract_quarter, impute_categorical, continous_imputation, encode_one_hot, sanitize_feature_names, dropping_columns, remove_outliers
+from .nodes import split_date_column, extract_quarter, impute_categorical, continous_imputation, encode_one_hot, sanitize_feature_names, dropping_columns, remove_outliers, log_transform
 
 def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline([
         node(
-            func=remove_outliers,
-            inputs=["HP_y_train", "HP_train","HP_y_test", "HP_test"],
-            outputs=["x_train_clean", "Y_train", "x_test_clean", "Y_test"],
-            name="remove_outliers_node"
+            func=log_transform,
+            inputs=["Y_train_1"],
+            outputs="Y_train",
+            name="log_transform_node"
         ),
         node(
             func=extract_quarter,
-            inputs=["x_train_clean", "x_test_clean", "params:quarter_column"],
+            inputs=["HP_train", "HP_test", "params:quarter_column"],
             outputs=["x_train_quarter", "x_test_quarter"],
             name="extract_quarter_node"
         ),
