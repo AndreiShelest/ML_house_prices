@@ -1,5 +1,6 @@
 import logging
 import pandas as pd
+import numpy as np
 from category_encoders.cat_boost import CatBoostEncoder
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -7,7 +8,34 @@ from sklearn.model_selection import KFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.ensemble import IsolationForest
 from category_encoders.target_encoder import TargetEncoder
+
+def remove_outliers(
+    y_train: pd.Series, 
+    x_train: pd.DataFrame, 
+    y_test: pd.Series, 
+    x_test: pd.DataFrame, 
+    contamination: float = 0.025
+) -> dict:
+
+    iso = IsolationForest(contamination=contamination, random_state=42)
+    iso.fit(y_train.values.reshape(-1, 1))
+
+    # Predict outliers for y_train and y_test
+    train_outlier_labels = iso.predict(y_train.values.reshape(-1, 1))
+    test_outlier_labels = iso.predict(y_test.values.reshape(-1, 1))
+
+    # Filter out outliers
+    x_train_clean = x_train[train_outlier_labels == 1]
+    y_train_clean = y_train[train_outlier_labels == 1]
+    x_test_clean = x_test[test_outlier_labels == 1]
+    y_test_clean = y_test[test_outlier_labels == 1]
+
+    return x_train_clean, y_train_clean, x_test_clean, y_test_clean
+    
+def log_transform(data):
+    return np.log(data)
 
 def extract_quarter(x_train, x_test, column):
 
@@ -33,6 +61,13 @@ def split_date_column(x_train, x_test, date_col):
     x_test.drop(columns=[date_col], inplace=True)
 
     return x_train, x_test
+
+def dropping_columns(x_train, x_test, columns_to_drop):
+    x_test = x_test.drop(columns=columns_to_drop)
+    x_train = x_train.drop(columns=columns_to_drop)
+    return x_train, x_test
+
+
 
 # def encode_categorical(data: pd.DataFrame, column: str, target: str) -> pd.DataFrame:
 #     data = data.copy()

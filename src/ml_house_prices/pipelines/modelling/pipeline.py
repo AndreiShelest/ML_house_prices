@@ -1,5 +1,5 @@
 from kedro.pipeline import Pipeline, node
-from .nodes import evaluate_model, train_benchmark, train_lightgbm, train_xgboost
+from .nodes import evaluate_model, train_benchmark, train_lightgbm, train_xgboost, train_catboost
 
 
 def create_pipeline(**kwargs)-> Pipeline:
@@ -23,6 +23,12 @@ def create_pipeline(**kwargs)-> Pipeline:
                 outputs=["linear_regression_model", "linear_regression_hyperparameters", "linear_regression_cv_scores"],
                 name="train_linear_regression_node",
             ),
+            node(
+                func=train_catboost,
+                inputs=["X_train", "Y_train", "params:catboost_model.param_grid", "params:cv_folds", "params:random_state"],
+                outputs=["catboost_model", "catboost_hyperparameters", "catboost_cv_scores"],
+                name="train_catboost_node",
+            ),
 
             node(
                 func=evaluate_model,
@@ -42,6 +48,12 @@ def create_pipeline(**kwargs)-> Pipeline:
                 inputs=["X_test", "Y_test", "linear_regression_model", "params:model_names.linear_regression"],
                 outputs="linear_regression_test_scores",
                 name="evaluate_linear_regression_node",
+            ),
+            node(
+                func=evaluate_model,
+                inputs=["X_test", "Y_test", "catboost_model", "params:model_names.catboost"],
+                outputs="catboost_test_scores",
+                name="evaluate_catboost_node",
             ),
         ]
     )

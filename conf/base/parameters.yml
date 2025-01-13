@@ -4,7 +4,6 @@ cv_folds: 5
 splitting:
   test_size: 0.2
   target_column: "purchase_price"
-  columns_to_drop: ["house_id", "address"]
 
 quarter_column: "quarter"
 date_column: "date"
@@ -18,10 +17,14 @@ continuous_imputation_params:
   target_col: 
     - "yield_on_mortgage_credit_bonds%"
     - "dk_ann_infl_rate%"
-
+columns_to_drop: 
+  - "house_id"
+  - "address"
+  - "day"
+  - "zip_code"
 encoding:
-  catboost: ["city", "zip_code"]
-  one_hot: ["house_type", "sales_type", "area", "region", "quarter"]
+  catboost: "city"
+  one_hot: ["house_type", "sales_type", "area", "region", "quarter", "month"]
 
 xgboost_model:
   param_grid:
@@ -49,3 +52,13 @@ model_names:
   lightgbm: "LightGBM"
   xgboost: "XGBoost"
   linear_regression: "Linear Regression"
+  catboost: "CatBoost"
+
+catboost_model:
+  param_grid:
+    iterations: "randint(100, 1000)"              # Integer values between 100 and 1000
+    learning_rate: "uniform(0.01, 0.3)"        # Continuous values between 0.01 and 0.31
+    depth: "randint(4, 10)"                      # Integer values between 4 and 10
+    l2_leaf_reg: "uniform(1, 10)"           # Continuous values between 1 and 11
+    bagging_temperature: "uniform(0, 1)"        # Continuous values between 0 and 1
+
