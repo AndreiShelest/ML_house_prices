@@ -117,6 +117,10 @@ xgboost_model:
   type: pickle.PickleDataset
   filepath: data/06_models/xgboost_model.pkl
 
+catboost_model:
+  type: pickle.PickleDataset
+  filepath: data/06_models/catboost_model.pkl
+
 linear_regression_model:
   type: pickle.PickleDataset
   filepath: data/06_models/linear_regression_model.pkl
@@ -128,6 +132,10 @@ lightgbm_hyperparameters:
 xgboost_hyperparameters:
   type: json.JSONDataset
   filepath: data/07_model_output/xgboost_hyperparameters.json
+
+catboost_hyperparameters:
+  type: json.JSONDataset
+  filepath: data/07_model_output/catboost_hyperparameters.json
 
 linear_regression_hyperparameters:
   type: json.JSONDataset
@@ -141,6 +149,10 @@ xgboost_cv_scores:
   type: json.JSONDataset
   filepath: data/07_model_output/xgboost_cv_scores.json
 
+catboost_cv_scores:
+  type: json.JSONDataset
+  filepath: data/07_model_output/catboost_cv_scores.json
+
 linear_regression_cv_scores:
   type: json.JSONDataset
   filepath: data/07_model_output/linear_regression_cv_scores.json
@@ -152,6 +164,10 @@ lightgbm_test_scores:
 xgboost_test_scores:
   type: json.JSONDataset
   filepath: data/08_reporting/xgboost_test_scores.json
+
+catboost_test_scores:
+  type: json.JSONDataset
+  filepath: data/08_reporting/catboost_test_scores.json
 
 linear_regression_test_scores:
   type: json.JSONDataset

@@ -7,6 +7,7 @@ from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
 from sklearn.pipeline import Pipeline
 from scipy.stats import randint, uniform
+from catboost import CatBoostRegressor
 import yaml
 from sklearn.preprocessing import StandardScaler
 
@@ -114,6 +115,32 @@ def train_lightgbm(x_train, y_train, param_grid, cv_folds, random_state):
     )
     search.fit(x_train, y_train)
 
+    best_model = search.best_estimator_
+    best_params = search.best_params_
+    cv_scores = search.cv_results_["mean_test_score"].tolist()  # Convert to list for JSON serialization
+
+    return best_model, best_params, cv_scores
+
+
+def train_catboost(x_train, y_train, param_grid, cv_folds, random_state):
+    parsed_param_grid = {key: parse_distribution(value) for key, value in param_grid.items()}
+
+    model = CatBoostRegressor(
+        random_seed=random_state,
+        silent=True  # Silence training logs for RandomizedSearchCV
+    )
+
+    search = RandomizedSearchCV(
+        estimator=model,
+        param_distributions=parsed_param_grid,
+        cv=cv_folds,
+        n_iter=10,
+        random_state=random_state,
+        scoring="neg_mean_squared_error",
+    )
+    search.fit(x_train, y_train)
+
+    # Extract results
     best_model = search.best_estimator_
     best_params = search.best_params_
     cv_scores = search.cv_results_["mean_test_score"].tolist()  # Convert to list for JSON serialization

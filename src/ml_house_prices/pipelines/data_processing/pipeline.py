@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import split_date_column, extract_quarter, impute_categorical, continous_imputation, encode_one_hot, sanitize_feature_names
+from .nodes import split_date_column, extract_quarter, impute_categorical, continous_imputation, encode_one_hot, sanitize_feature_names, dropping_columns
 
 def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline([
@@ -17,11 +17,18 @@ def create_pipeline(**kwargs) -> Pipeline:
             outputs=["x_train_date_split", "x_test_date_split"],
             name="split_date_column_node"
         ),
+        node(
+            func=dropping_columns,
+            inputs=["x_train_date_split", "x_test_date_split", "params:columns_to_drop"],
+            outputs=["x_train_dropped", "x_test_dropped"],
+            name="dropping_columns_node"
+        ),
+        
         
         # Perform encoding earlier in the pipeline
         node(
             func=encode_one_hot,
-            inputs=["x_train_date_split", "x_test_date_split", "params:encoding", "Y_train"],
+            inputs=["x_train_dropped", "x_test_dropped", "params:encoding", "Y_train"],
             outputs=["x_train_encoded", "x_test_encoded"],
             name="encode_one_hot_node"
         ),

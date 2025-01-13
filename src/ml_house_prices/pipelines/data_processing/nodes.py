@@ -34,6 +34,13 @@ def split_date_column(x_train, x_test, date_col):
 
     return x_train, x_test
 
+def dropping_columns(x_train, x_test, columns_to_drop):
+    x_test = x_test.drop(columns=columns_to_drop)
+    x_train = x_train.drop(columns=columns_to_drop)
+    return x_train, x_test
+
+
+
 # def encode_categorical(data: pd.DataFrame, column: str, target: str) -> pd.DataFrame:
 #     data = data.copy()
 #     encoder = TargetEncoder(cols=[column])
