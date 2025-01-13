@@ -52,36 +52,43 @@ HP_test:
   filepath: data/02_intermediate/hp_test.csv
 
 x_train_quarter:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_train_quarter.csv
 
 x_test_quarter:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_test_quarter.csv
 
 x_train_date_split:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_train_date_split.csv
 
 x_test_date_split:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_test_date_split.csv
 
 x_train_categorical_imputed:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_train_categorical_imputed.csv
 
 x_test_categorical_imputed:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_test_categorical_imputed.csv
 
 x_train_encoded:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_train_encoded.csv
 
 x_test_encoded:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/03_primary/x_test_encoded.csv
+X_train_almost_ready:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/X_train_clean.csv
+
+X_test_almost_ready:
+  type: pandas.CSVDataset
+  filepath: data/04_feature/X_test_clean.csv
 
 X_test:
   type: pandas.CSVDataset
@@ -103,49 +110,49 @@ Y_test:
 # after training
 
 lightgbm_model:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/lightgbm_model.pkl
 
 xgboost_model:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/xgboost_model.pkl
 
 linear_regression_model:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/linear_regression_model.pkl
 
 lightgbm_hyperparameters:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/lightgbm_hyperparameters.json
 
 xgboost_hyperparameters:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/xgboost_hyperparameters.json
 
 linear_regression_hyperparameters:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/linear_regression_hyperparameters.json
 
 lightgbm_cv_scores:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/lightgbm_cv_scores.json
 
 xgboost_cv_scores:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/xgboost_cv_scores.json
 
 linear_regression_cv_scores:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/07_model_output/linear_regression_cv_scores.json
 
 lightgbm_test_scores:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/08_reporting/lightgbm_test_scores.json
 
 xgboost_test_scores:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/08_reporting/xgboost_test_scores.json
 
 linear_regression_test_scores:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/08_reporting/linear_regression_test_scores.json

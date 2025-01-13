@@ -8,13 +8,20 @@ splitting:
 
 quarter_column: "quarter"
 date_column: "date"
-categorical_columns: "city"
-exclude_columns: ["city", "yield_on_mortgage_credit_bonds%", "dk_ann_infl_rate%"]
-continuous_imputation_params: ["yield_on_mortgage_credit_bonds%", "dk_ann_infl_rate%"]
+categorical_columns: 
+  - city
+exclude_columns: ["yield_on_mortgage_credit_bonds%", "dk_ann_infl_rate%"]
+continuous_imputation_params: 
+  exclude_cols: 
+    - "yield_on_mortgage_credit_bonds%"
+    - "dk_ann_infl_rate%"
+  target_col: 
+    - "yield_on_mortgage_credit_bonds%"
+    - "dk_ann_infl_rate%"
 
 encoding:
   catboost: ["city", "zip_code"]
-  one_hot: ["house_type", "sales_type", "area", "region"]
+  one_hot: ["house_type", "sales_type", "area", "region", "quarter"]
 
 lightgbm_model:
   param_grid:

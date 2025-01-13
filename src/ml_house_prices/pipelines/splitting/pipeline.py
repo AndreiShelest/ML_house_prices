@@ -2,8 +2,8 @@ from kedro.pipeline import Pipeline, node, pipeline
 
 from .nodes import  split_data
 
-def create_splitting_pipeline(**kwargs) -> Pipeline:
-    return pipeline([
+def create_pipeline(**kwargs) -> Pipeline:
+    return Pipeline([
         node(func=split_data,
                 inputs=[
                     'house_prices',

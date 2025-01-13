@@ -2,7 +2,7 @@ from kedro.pipeline import Pipeline, node
 from .nodes import evaluate_model, train_benchmark, train_lightgbm, train_xgboost
 
 
-def create_pipeline_model(**kwargs):
+def create_pipeline(**kwargs)-> Pipeline:
     return Pipeline(
         [
             node(

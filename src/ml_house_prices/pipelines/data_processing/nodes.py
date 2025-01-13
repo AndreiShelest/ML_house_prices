@@ -98,18 +98,40 @@ def encode_one_hot(x_train: pd.DataFrame, x_test: pd.DataFrame, parameters: dict
 
     return x_train, x_test
 
-def continous_imputation(x_train, x_test, params):
+def continous_imputation(x_train, x_test, params, random_state):
     exclude_cols = params["exclude_cols"]
-    target_col = params["target_col"]
-    predictors = [col for col in x_train.columns if col not in exclude_cols + [target_col]]
-    train_non_missing = x_train[~x_train[target_col].isnull()]
-    train_missing = x_train[x_train[target_col].isnull()]
+    target_cols = params["target_col"]
+    
+ 
+    for column in target_cols:
 
-    model = LinearRegression()
-    model.fit(train_non_missing[predictors], train_non_missing[target_col])
-    if not train_missing.empty:
-        x_train.loc[x_train[target_col].isnull(), target_col] = model.predict(train_missing[predictors])
-    if x_test[target_col].isnull().any():
-        x_test.loc[x_test[target_col].isnull(), target_col] = model.predict(x_test[x_test[target_col].isnull()][predictors])
+        predictors = [
+            col for col in x_train.columns if col not in exclude_cols + [column]
+        ]
 
+        train_non_missing = x_train[~x_train[column].isnull()]
+        train_missing = x_train[x_train[column].isnull()]
+        test_missing = x_test[x_test[column].isnull()]
+        
+
+        from sklearn.tree import DecisionTreeRegressor
+        model = DecisionTreeRegressor(random_state=random_state)
+        model.fit(train_non_missing[predictors], train_non_missing[column])
+        
+ 
+        if not train_missing.empty:
+            x_train.loc[train_missing.index, column] = model.predict(train_missing[predictors])
+        if not test_missing.empty:
+            x_test.loc[test_missing.index, column] = model.predict(test_missing[predictors])
+    
+    return x_train, x_test
+
+def sanitize_feature_names(x_train, x_test):
+
+    def clean_columns(df):
+        df.columns = df.columns.str.replace(r"[^\w\s]", "", regex=True)
+        return df
+    
+    x_train = clean_columns(x_train)
+    x_test = clean_columns(x_test)
     return x_train, x_test
