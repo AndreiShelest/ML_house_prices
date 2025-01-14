@@ -51,6 +51,14 @@ HP_test:
   type: pandas.CSVDataset
   filepath: data/02_intermediate/hp_test.csv
 
+HP_train_sqm_price_transformed:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/hp_train_sqm.csv
+
+HP_test_sqm_price_transformed:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/hp_test_sqm.csv
+
 
 x_train_quarter:
   type: pandas.CSVDataset

@@ -1,18 +1,30 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import split_date_column, extract_quarter, impute_categorical, continous_imputation, encode_one_hot, sanitize_feature_names, dropping_columns, remove_outliers, log_transform
+from .nodes import split_date_column, extract_quarter, impute_categorical, continous_imputation, encode_one_hot, sanitize_feature_names, dropping_columns, remove_outliers, log_transform, log_transform_target
 
 def create_pipeline(**kwargs) -> Pipeline:
     return Pipeline([
         node(
-            func=log_transform,
+            func=log_transform_target,
             inputs=["Y_train_1"],
             outputs="Y_train",
             name="log_transform_node"
         ),
         node(
+            func=log_transform,
+            inputs=dict(data="HP_train", column_name="params:log_column"),
+            outputs="HP_train_sqm_price_transformed",
+            name="log_transform_xtrain_node"
+        ),
+        node(
+            func=log_transform,
+            inputs=dict(data="HP_test", column_name="params:log_column"),
+            outputs="HP_test_sqm_price_transformed",
+            name="log_transform_xtest_node"
+        ),
+        node(
             func=extract_quarter,
-            inputs=["HP_train", "HP_test", "params:quarter_column"],
+            inputs=["HP_train_sqm_price_transformed", "HP_test_sqm_price_transformed", "params:quarter_column"],
             outputs=["x_train_quarter", "x_test_quarter"],
             name="extract_quarter_node"
         ),

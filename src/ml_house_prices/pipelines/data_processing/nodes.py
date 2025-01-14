@@ -34,8 +34,11 @@ def remove_outliers(
 
     return x_train_clean, y_train_clean, x_test_clean, y_test_clean
     
-def log_transform(data):
-    return np.log(data)
+def log_transform(data, column_name):
+    data[column_name] = np.log(data[column_name]) 
+    return data
+def log_transform_target(target):
+    return np.log(target)
 
 def extract_quarter(x_train, x_test, column):
 

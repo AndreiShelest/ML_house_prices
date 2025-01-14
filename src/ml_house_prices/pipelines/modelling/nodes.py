@@ -60,10 +60,8 @@ def evaluate_model(X_test, y_test, model, model_name, inverse_transform=np.exp):
     predictions = pd.Series(predictions, index=y_test.index)
 
     if inverse_transform:
-
         max_log_value = 700  
         predictions = np.clip(predictions, a_min=None, a_max=max_log_value)
-
         predictions = inverse_transform(predictions)
 
         if np.any(np.isnan(predictions)) or np.any(np.isinf(predictions)):
@@ -74,21 +72,31 @@ def evaluate_model(X_test, y_test, model, model_name, inverse_transform=np.exp):
 
     mse = mean_squared_error(y_test, predictions)
     rmse = np.sqrt(mse)
+    mae = np.mean(np.abs(y_test - predictions))  # Add MAE calculation
     mape = np.mean(np.abs((y_test - predictions) / y_test)) * 100
     r2 = r2_score(y_test, predictions)
+
+    # Calculate Adjusted R²
+    n = len(y_test)  # Number of observations
+    p = X_test.shape[1]  # Number of predictors
+    adjusted_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
 
     print(f"Model: {model_name}")
     print(f"MSE: {mse}")
     print(f"RMSE: {rmse}")
+    print(f"MAE: {mae}")
     print(f"MAPE: {mape}")
     print(f"R2: {r2}")
+    print(f"Adjusted R2: {adjusted_r2}")
 
     return {
         "model": model_name,
         "mse": mse,
         "rmse": rmse,
+        "mae": mae,
         "mape": mape,
-        "r2": r2
+        "r2": r2,
+        "adjusted_r2": adjusted_r2
     }
 
 
@@ -100,7 +108,7 @@ def train_xgboost(x_train, y_train, param_grid, cv_folds, random_state):
         model,
         param_distributions=parsed_param_grid,
         cv=cv_folds,
-        n_iter=10,
+        n_iter=20,
         random_state=random_state,
         scoring="neg_mean_squared_error",
     )
@@ -121,7 +129,7 @@ def train_lightgbm(x_train, y_train, param_grid, cv_folds, random_state):
         model,
         param_distributions=parsed_param_grid,
         cv=cv_folds,
-        n_iter=10,
+        n_iter=20,
         random_state=random_state,
         scoring="neg_mean_squared_error",
     )
@@ -146,7 +154,7 @@ def train_catboost(x_train, y_train, param_grid, cv_folds, random_state):
         estimator=model,
         param_distributions=parsed_param_grid,
         cv=cv_folds,
-        n_iter=10,
+        n_iter=20,
         random_state=random_state,
         scoring="neg_mean_squared_error",
     )
