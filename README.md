@@ -1,5 +1,17 @@
 # ml_house_prices
 
+In this project we tried to predict prices of houses in Denmark from years1 994-2024.
+We used following data:
+https://www.kaggle.com/datasets/martinfrederiksen/danish-residential-housing-prices-1992-2024/data
+
+Models used in this project:
+    - XGBoost
+    - CatBoost
+    - LightGBM
+    - Linear regression - benchmark
+
+
+
 [![Powered by Kedro](https://img.shields.io/badge/powered_by-kedro-ffc900?logo=kedro)](https://kedro.org)
 
 ## Overview

@@ -72,13 +72,13 @@ def evaluate_model(X_test, y_test, model, model_name, inverse_transform=np.exp):
 
     mse = mean_squared_error(y_test, predictions)
     rmse = np.sqrt(mse)
-    mae = np.mean(np.abs(y_test - predictions))  # Add MAE calculation
+    mae = np.mean(np.abs(y_test - predictions)) 
     mape = np.mean(np.abs((y_test - predictions) / y_test)) * 100
     r2 = r2_score(y_test, predictions)
 
-    # Calculate Adjusted R²
-    n = len(y_test)  # Number of observations
-    p = X_test.shape[1]  # Number of predictors
+   
+    n = len(y_test)  
+    p = X_test.shape[1]
     adjusted_r2 = 1 - (1 - r2) * (n - 1) / (n - p - 1)
 
     print(f"Model: {model_name}")
